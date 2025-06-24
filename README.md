@@ -33,7 +33,9 @@ sell(1, 10000) # won't work, will throw TypeError - good, because it protects us
 sell(price=10000, quantity=1) # will work, it's correct + it's harder to make a mistake
 ```
 
-The problem with the `*` solution is that you don't get any error. Yes, it helps the programer to see better what he is doing, but still, if someone mistakes the one for the other, nothing will stop this from running. Given a complex data flow, a big number of functions and the existence of high-order functions, you need something that not only it makes it visible to your eyes that it's wrong but... that it will stop you as well if you make a mistake, as tinytypes, that if you pass a value of type `Quantity` where `Price` is expected, you will get an error.
+The problem with the `*` solution is that you don't get any error. Yes, it helps the programer to see better what he is doing, but still, if someone mistakes the one for the other, nothing will stop this from running. 
+
+Given a complex data flow, a big number of functions and the existence of high-order functions, you need something that not only it makes it visible to your eyes that it's wrong but... that it will stop you as well if you make a mistake, as tinytypes, that if you pass a value of type `Quantity` where `Price` is expected, you will get an error.
 
 Tinytypes can also improve domain-specific logic. Instead of checking in each function that you expect a `Price` if the value is negative, someone can centralize this and just make the tinytype not being able to take a negative value.
 
