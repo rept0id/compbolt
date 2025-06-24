@@ -138,7 +138,7 @@ Another clarity concept.
 There are times that instead of waiting for a number, someone needs a specific set of numbers.
 
 For example, for compound, only the numbers 1 for annualy, 2 for semi-anually, 4 for quartely and 12 for monthly. 
-Anything else, in the context of our example, is a bad idea, specially 365 for a year or 52 for weeks, can be tricky, since they change according to the year.
+Anything else, in the context of our example, is a bad idea, specially 365 for daily or 52 for weekly, can be tricky, since they change according to the year.
 
 Let's say now that we want to express this with code. One way is to make our function to check, once it's called, that the compound is one of the numbers that we like. But this way, the caller doesn't know this, and will get an error message (?) without knowning that it was not allowed to put 365 for compound but only 1,2,4 or 12.
 
