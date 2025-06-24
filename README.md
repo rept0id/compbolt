@@ -35,7 +35,7 @@ sell(price=10000, quantity=1) # will work, it's correct + it's harder to make a 
 
 The problem with the `*` solution is that you don't get any error. Yes, it helps the programer to see better what he is doing, but still, if someone mistakes the one for the other, nothing will stop this from running. Given a complex data flow, a big number of functions and the existence of high-order functions, you need something that not only it makes it visible to your eyes that it's wrong but... that it will stop you as well if you make a mistake, as tinytypes, that if you pass a value of type `Quantity` where `Price` is expected, you will get an error.
 
-Tinytypes can also improve domain-specific logic. Instead of checking in each function that you expect a `Price` if the value is negative, you can centralize this and just make the tinytype not being able to take a negative value.
+Tinytypes can also improve domain-specific logic. Instead of checking in each function that you expect a `Price` if the value is negative, someone can centralize this and just make the tinytype not being able to take a negative value.
 
 `Price` as a tinytype would simply look like this :
 ```
@@ -131,9 +131,14 @@ print(result)
 ```
 
 ### 2. Enums everywhere
-Another clarity concept, sometimes is needed a set of numbers to be precise. For example, for compound, only the numbers 1 for annualy, 2 for semi-anually, 4 for quartely and 12 for monthly. 
+Another clarity concept.
 
-In this case, we don't want to mess with weekly and daily as this changes per year (a year doesnt always have 52 weeks neither 365 days). To address this, we can use an enum as an option, instead of a raw number.
+There are times that instead of waiting for a number, someone needs a specific set of numbers.
+
+For example, for compound, only the numbers 1 for annualy, 2 for semi-anually, 4 for quartely and 12 for monthly. 
+Anything other is a bad idea, specially 365 for a year or 52 for weeks, they are both wrong, since they change according to the year.
+
+Let's say now that we want to express this with code. One way is to make our function to check, once it's called, that the compound is one of the numbers that we like. But this way, the caller doesn't know this, and will get an error message (?) without knowning that it was not allowed to put 365 for compound but only 1,2,4 or 12.
 
 With enums, we can express this in our code and exclude weekly and daily in a very cool way.
 
@@ -145,7 +150,7 @@ class Compound(Enum):
     MONTHLY = 12
 ```
 
-Our function now, waits for a specific set of numbers for compound and we can be sure about it, we don't have to rely on checks inside each function that given a big complexity, we may forget to write.
+Now, our function makes it clear what compound we are waiting for.
 ```python
 def calculate_compound_interest(
     *,
