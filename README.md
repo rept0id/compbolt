@@ -1,6 +1,6 @@
 # compbolt
 
-Compbolt is an extremely stable and hard to misuse API library. 
+Compbolt is library with a stable and hard to misuse API.
 
 The functionality of this library is to calculate compounded interest... but the real purpose is to test Matt Godbolt's suggestions from "[Correct by Construction: APIs That Are Easy to Use and Hard to Misuse - Matt Godbolt - C++ on sea](https://www.youtube.com/watch?v=nLSm3Haxz0I)" on a high-level language.
 
