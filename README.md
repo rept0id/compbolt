@@ -126,7 +126,7 @@ Another clarity concept, sometimes is needed a set of numbers to be precise. For
 
 In this case, we don't want to mess with weekly and daily as this changes per year (a year doesnt always have 52 weeks neither 365 days). To address this, we can use an enum as an option, instead of a raw number.
 
-With enums, we can express this in our code and exclude weekly and daily in a very polished way.
+With enums, we can express this in our code and exclude weekly and daily in a very cool way.
 
 ```python
 class Compound(Enum):
