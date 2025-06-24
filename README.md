@@ -6,7 +6,7 @@ Matt gives as an example a trading API, that is implemented in C++. In reality, 
 
 His ideas are :
 
-1. Tinytypes enforce clarity (and protect the caller)
+**1. Tinytypes enforce clarity (and protect the caller)**
 
 Tinytypes is a concept of making a distinct types even for simple -but important- values instead of doing only for complex structures. Simple but important values, meaning for example: `price`, `quantity`... values that are usually closeby as functions arguments and are easy to be flipped by mistake.
 
@@ -119,5 +119,38 @@ result = calculate_compound_interest_anually(
 print(result)
 ```
 
-2. Enums everywhere
-  
+**2. Enums everywhere**
+Another clarity concept, sometimes is needed a set of numbers to be precise. For example, for compound, only the numbers 1 for annualy, 2 for semi-anually, 4 for quartely and 12 for monthly. 
+
+In this case, we don't want to mess with weekly and daily as this changes per year (a year doesnt always have 52 weeks neither 365 days). To address this, we can use an enum as an option, instead of a raw number.
+
+```python
+class Compound(Enum):
+    ANNUAL = 1
+    SEMIANNUAL = 2
+    QUARTERLY = 4
+    MONTHLY = 12
+```
+
+Our function now, waits for a specific set of numbers for compound and we can be sure about it, we don't have to rely on checks inside each function that give a big complexity, we may forget to write.
+```python
+def calculate_compound_interest(
+    *,
+    principal: Principal,
+    rate_percent: RatePercent,
+    years: Years,
+    compound: Compound # <--- here
+) -> Decimal:
+    if not isinstance(principal, Principal):
+        raise TypeError(f"Expected Principal, got {type(principal).__name__}")
+    if not isinstance(rate_percent, RatePercent):
+        raise TypeError(f"Expected RatePercent, got {type(rate_percent).__name__}")
+    if not isinstance(years, Years):
+        raise TypeError(f"Expected Years, got {type(years).__name__}")
+    if not isinstance(compound, Compound): # <--- and here
+        raise TypeError(f"Expected Compound, got {type(compound).__name__}")
+
+    # ...
+```
+
+Enums can also be used for better state management. Instead of states existing magically in our code, we can have an enum that specifies each state. This, not only makes our work more reliable, but adds to better readability and maintainability.
