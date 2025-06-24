@@ -29,7 +29,7 @@ What Python does apart from tinytypes to address the issue, is that it allows fo
 def sell(*, price, quantity):
   # ...
 
-sell(1, 10000) # won't work, will throw TypeError - good, because it saved us from making a mistake
+sell(1, 10000) # won't work, will throw TypeError - good, because it protects us
 sell(price=10000, quantity=1) # will work, it's correct and it's harder to make a mistake
 ```
 
