@@ -2,15 +2,15 @@
 
 Compbolt is an extremely stable and hard to misuse library. 
 
-The functionality of this library is to calculate compounded interest, but the real purpose is to test Matt's Godbolt suggestions from "[Correct by Construction: APIs That Are Easy to Use and Hard to Misuse - Matt Godbolt - C++ on sea](https://www.youtube.com/watch?v=nLSm3Haxz0I)" on a higher level language.
+The functionality of this library is to calculate compounded interest... but the real purpose is to test Matt Godbolt's suggestions from "[Correct by Construction: APIs That Are Easy to Use and Hard to Misuse - Matt Godbolt - C++ on sea](https://www.youtube.com/watch?v=nLSm3Haxz0I)" on a high-level language.
 
-Matt gives as an example a trading API, that is implemented in C++. In reality, many economical APIs are made in Python as well, so we picked Python as our high level language.
+Matt gives us the example of a stocks trading API that is implemented in C++. Because we wanted to test what we saw there on a high-level language, we picked Python.
 
 ## Concepts
 
 ### 1. Tinytypes enforce clarity (and protect the caller)
 
-Tinytypes is a concept of making a distinct types even for simple -but important- values instead of doing only for complex structures. Simple but important values, meaning for example: `price`, `quantity`... values that are usually closeby as functions arguments and are easy to be flipped by mistake.
+Tinytypes is a concept of making distinct types even for simple -but important- values instead of utilizing types only for complex structures. `Price` and `Quantity`, for example, are not values that you want to put the one in the place of the other, so the more clarity, the better.
 
 The main thing we try to avoid is :
 ```python
@@ -21,10 +21,10 @@ sell(1, 10000) # ooops ! We sold 10000 stocks for 1 buck !
 sell(10000, 1) # Correct, we sold 1 stock for 10000 bucks
 ```
 
-Before we go to a tinytypes example in Python, we need to mention that Python, in contrast to C++, does something to help to enforce clarity - but there is still potential into using tinytypes.
+Before we go to a tinytypes example in Python, we need to mention that Python, in contrast to C++, does something to help to enforce clarity - but hold on after this, because there is still good potential into using tinytypes.
 
-What Python does apart from tinytypes to address the issue, is that it allows for a function to enforce calling it with each parameters name. This happens if you put a '*' as first parameter.
-
+What Python does to address the exact issue, without tinytypes, is that it allows for a function to enforce calling it only with the names provided for each parameter.
+For example :
 ```python
 def sell(*, price, quantity):
   # ...
@@ -33,13 +33,22 @@ sell(1, 10000) # won't work, will throw TypeError - good, because it protects us
 sell(price=10000, quantity=1) # will work, it's correct + it's harder to make a mistake
 ```
 
-The problem with `*` is, that given a number of functions that the one passes to the other a fixed set of values, the number of functions that do use the `*` feature decreases and the possibilities of logical mistakes like flipping values by increases because of complexity, even if it's theoretically visible by the human eye that `sell(price=1, quantity=10000)` is wrong - let alone the case that high-order functions that pass data dynamically may do exist. 
+The problem with the `*` solution is that you don't get any error. Yes, it helps the programer to see better what he is doing, but still, if someone mistakes the one for the other, nothing will stop this from running. Given a complex data flow, a big number of functions and the existence of high-order functions, you need something that not only it makes it visible to your eyes that it's wrong but... that it will stop you as well if you make a mistake, as tinytypes, that if you pass a value of type `Quantity` where `Price` is expected, you will get an error.
 
-Tinytypes enforce clarity through the whole data flow and the whole codebase and will throw errors in case of logical mistakes, in contrast to the `*` feature that does this per function and will fail silently in case of logical mistakes. Still, nothing stops the case of doing a mistake like `sell(price=Price(Decimal("10000"), quantity=Quantity(Decimal("1"))` (we assume that selling 10000 stocks for 1 buck is a mistake in all of our examples), but tinytypes can bring more safety from the statically-checked world to important APIs in dynamically typed languages.
+Tinytypes can also improve domain-specific logic. Instead of checking in each function that you expect a `Price` if the value is negative, you can centralize this and just make the tinytype not being able to take a negative value.
 
-Apart from this concept, in case of Python, tinytypes can also improve the domain-specific logic. For example, instead of checking in every function if `RatePercentage` is bigger than 100 (we assume it's mistake percentage to be bigger than 100), we just make a `RatePercentage` type that includes this check.
+`Price` as a tinytype would simply look like this :
+```
+@dataclass(frozen=True)
+class Price:
+    value: Decimal
 
-An example of tinytypes follows below: 
+    def __post_init__(self):
+        if self.value < 0:
+            raise ValueError(f"Price cannot be negative: {self.value}")
+```
+
+A full example of tinytypes follows below: 
 
 ```python
 from decimal import Decimal
