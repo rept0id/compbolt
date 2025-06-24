@@ -14,7 +14,7 @@ Tinytypes is a concept of making a distinct types even for simple -but important
 
 The main thing we try to avoid is :
 ```python
-def buy(price, quantity):
+def sell(price, quantity):
   # ...
 
 sell(1, 10000) # ooops ! We sold 10000 stocks for 1 buck !
@@ -26,7 +26,7 @@ Before we go to a tinytypes example in Python, we need to mention that Python, i
 What Python does apart from tinytypes to address the issue, is that it allows for a function to enforce calling it with each parameters name. This happens if you put a '*' as first parameter.
 
 ```python
-def buy(*, price, quantity):
+def sell(*, price, quantity):
   # ...
 
 sell(1, 10000) # won't work, will throw TypeError - good, because it saved us from making a mistake
