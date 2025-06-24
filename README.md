@@ -165,6 +165,8 @@ RAII stands for "Resource Acquisition Is Initialization".
 
 In the context of higher level and garbage collected programing languages is not needed. 
 
-Matt gives a more self-explanatory terms for this, "Constructor acquires, destructor releases" and it's all about how you can free memory in a more streamlined way instead of throwing memory allocations everywhere and then based on your understanding of your code to free them. With this methodology, when you create an object (since he is talking about C++) you acquire memory and when you destroy it you free memory. 
+Matt gives a more self-explanatory terms for this, "Constructor acquires, destructor releases". It's all about how you can free memory in a more streamlined way instead of throwing memory allocations everywhere and then based on your understanding of your code to free them. 
+
+With this methodology, when you create an object (since he is talking about C++) you acquire memory and when you destroy it you free memory. 
 
 A nice abstraction over memory management.
