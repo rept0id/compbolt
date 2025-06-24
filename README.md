@@ -1,6 +1,8 @@
 # compbolt
 
-compbolt is an extremely stable and hard to misuse library. The functionality of this library is to calculate compounded interest, but the real purpose is to test Matt's Godbolt suggestions from "[Correct by Construction: APIs That Are Easy to Use and Hard to Misuse - Matt Godbolt - C++ on sea](https://www.youtube.com/watch?v=nLSm3Haxz0I)" on a higher level language.
+Compbolt is an extremely stable and hard to misuse library. 
+
+The functionality of this library is to calculate compounded interest, but the real purpose is to test Matt's Godbolt suggestions from "[Correct by Construction: APIs That Are Easy to Use and Hard to Misuse - Matt Godbolt - C++ on sea](https://www.youtube.com/watch?v=nLSm3Haxz0I)" on a higher level language.
 
 Matt gives as an example a trading API, that is implemented in C++. In reality, many economical APIs are made in Python as well, so we picked Python as our high level language.
 
