@@ -4,9 +4,9 @@ compbolt is an extremely stable and hard to misuse library. The functionality of
 
 Matt gives as an example a trading API, that is implemented in C++. In reality, many economical APIs are made in Python as well, so we picked Python as our high level language.
 
-His ideas are :
+## Concepts
 
-**1. Tinytypes enforce clarity (and protect the caller)**
+### 1. Tinytypes enforce clarity (and protect the caller)
 
 Tinytypes is a concept of making a distinct types even for simple -but important- values instead of doing only for complex structures. Simple but important values, meaning for example: `price`, `quantity`... values that are usually closeby as functions arguments and are easy to be flipped by mistake.
 
@@ -119,7 +119,7 @@ result = calculate_compound_interest_anually(
 print(result)
 ```
 
-**2. Enums everywhere**
+### 2. Enums everywhere
 Another clarity concept, sometimes is needed a set of numbers to be precise. For example, for compound, only the numbers 1 for annualy, 2 for semi-anually, 4 for quartely and 12 for monthly. 
 
 In this case, we don't want to mess with weekly and daily as this changes per year (a year doesnt always have 52 weeks neither 365 days). To address this, we can use an enum as an option, instead of a raw number.
@@ -154,3 +154,9 @@ def calculate_compound_interest(
 ```
 
 Enums can also be used for better state management. Instead of states existing magically in our code, we can have an enum that specifies each state. This, not only makes our work more reliable, but adds to better readability and maintainability.
+
+
+## Other concepts from Matt Godbolt
+
+#### 1. RAII
+  RAII stands for "Resource Acquisition Is Initialization". In the context of higher level, garbage collected programing languages is not needed. Matt gives a more self-explanatory terms for this, "Constructor acquires, destructor releases" and it's all about how you can free memory in a more streamlined way instead of throwing memory allocations everywhere and then based on your understanding of your code to free them. With this methodology, when you create an object (since he is talking about C++) you acquire memory and when you destroy it you free memory. A nice abstraction over memory management.
