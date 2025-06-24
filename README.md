@@ -186,3 +186,35 @@ Matt gives a more self-explanatory terms for this, "Constructor acquires, destru
 With this methodology, when you create an object (since he is talking about C++) you acquire memory and when you destroy it you free memory. 
 
 A nice abstraction over memory management.
+
+## How to test
+
+```
+pytest
+```
+
+## How to use 
+
+```
+from decimal import Decimal
+
+from compbolt import (
+    Principal,
+    RatePercent,
+    Years,
+    Compound,
+
+    calculate_compound_interest
+)
+
+### # # ###
+
+result = calculate_compound_interest(
+    principal=Principal(Decimal('1000')),
+    rate_percent=RatePercent(Decimal('5.0')),
+    years=Years(Decimal('2')),
+    compound=Compound.ANNUAL
+)
+
+print(result)
+```
