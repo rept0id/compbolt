@@ -30,7 +30,7 @@ def sell(*, price, quantity):
   # ...
 
 sell(1, 10000) # won't work, will throw TypeError - good, because it protects us
-sell(price=10000, quantity=1) # will work, it's correct and it's harder to make a mistake
+sell(price=10000, quantity=1) # will work, it's correct + it's harder to make a mistake
 ```
 
 The problem with `*` is, that given a number of functions that the one passes to the other a fixed set of values, the number of functions that do use the `*` feature decreases and the possibilities of logical mistakes like flipping values by increases because of complexity, even if it's theoretically visible by the human eye that `sell(price=1, quantity=10000)` is wrong - let alone the case that high-order functions that pass data dynamically may do exist. 
