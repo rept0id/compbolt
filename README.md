@@ -10,7 +10,7 @@ Matt gives us the example of a stocks trading API that is implemented in C++. Be
 
 ### 1. Tinytypes enforce clarity (and protect the caller)
 
-Tinytypes is a concept of making distinct types even for simple -but important- values instead of utilizing types only for complex structures. `Price` and `Quantity`, for example, are not values that you want to put the one in the place of the other, so the more clarity, the better.
+Tinytypes are a concept for creating distinct types even for simple -but important- values, instead of utilizing types only for complex structures. `Price` and `Quantity`, for example, are not values that you want to put the one in the place of the other, so the more hard is to do this, the better.
 
 The main thing we try to avoid is :
 ```python
@@ -35,9 +35,9 @@ sell(price=10000, quantity=1) # will work, it's correct + it's harder to make a 
 
 The problem with the `*` solution is that you don't get any error. Yes, it helps the programer to see better what he is doing, but still, if someone mistakes the one for the other, nothing will stop this from running. 
 
-Given a complex data flow, a big number of functions and the existence of high-order functions, you need something that not only it makes it visible to your eyes that it's wrong but... that it will stop you as well if you make a mistake, as tinytypes, that if you pass a value of type `Quantity` where `Price` is expected, you will get an error.
+Given a complex data flow, a big number of functions and the existence of high-order functions, you need something that not only it makes it visible to your eyes that it's wrong but... that it will stop you as well if you make a mistake. With tinytypes, if you pass a value of type `Quantity` where `Price` is expected, you will get an error.
 
-Tinytypes can also improve domain-specific logic. Instead of checking in each function that you expect a `Price` if the value is negative, someone can centralize this and just make the tinytype not being able to take a negative value.
+Tinytypes can also improve domain-specific logic. Instead of checking in each function that you expect a `Price` if the value is negative, tinytypes offer the option to centralize this and just make the tinytype check it's self. This way, wherever you expect a parameter of type `Price`, you can be sure that it won't be negative. (This could be called... tiny-OOP and it's just an extra, that's not the best of tinytypes.)
 
 `Price` as a tinytype would simply look like this :
 ```
@@ -133,12 +133,17 @@ print(result)
 ```
 
 ### 2. Enums everywhere
+
 Another clarity concept.
 
 There are times that instead of waiting for a number, someone needs a specific set of numbers.
 
-For example, for compound, only the numbers 1 for annualy, 2 for semi-anually, 4 for quartely and 12 for monthly. 
-Anything else, in the context of our example, is a bad idea, specially 365 for daily or 52 for weekly, can be tricky, since they change according to the year.
+For example, for compound, only the numbers : 
+ - 1 for annualy
+ - 2 for semi-anually
+ - 4 for quartely and
+ - 12 for monthly 
+Anything else, in the context of our example, is a bad idea, specially 365 for daily or 52 for weekly, they both can be tricky, since they change according to the year.
 
 Let's say now that we want to express this with code. One way is to make our function to check, once it's called, that the compound is one of the numbers that we like. But this way, the caller doesn't know this, and will get an error message (?) without knowning that it was not allowed to put 365 for compound but only 1,2,4 or 12.
 
@@ -171,6 +176,16 @@ def calculate_compound_interest(
         raise TypeError(f"Expected Compound, got {type(compound).__name__}")
 
     # ...
+```
+
+Now, our function makes it clear what are the options.
+```python
+calculate_compound_interest_anually(
+    principal=Principal(Decimal('1000')),
+    rate_percent=RatePercent(Decimal('5.0')),
+    years=Years(Decimal('2')),
+    compound=Compound.ANNUAL
+)
 ```
 
 Enums can also be used for better state management. Instead of states existing magically in our code, we can have an enum that specifies each state. This, not only makes our work more reliable, but adds to better readability and maintainability.
