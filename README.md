@@ -158,7 +158,6 @@ class Compound(Enum):
     MONTHLY = 12
 ```
 
-Now, our function makes it clear what compound we are waiting for.
 ```python
 def calculate_compound_interest(
     *,
