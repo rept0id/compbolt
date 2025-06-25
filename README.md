@@ -40,7 +40,7 @@ Given a complex data flow, a big number of functions and the existence of high-o
 Tinytypes can also improve domain-specific logic. Instead of checking in each function that you expect a `Price` if the value is negative, tinytypes offer the option to centralize this and just make the tinytype check it's self. This way, wherever you expect a parameter of type `Price`, you can be sure that it won't be negative. (This could be called... tiny-OOP and it's just an extra, that's not the best of tinytypes.)
 
 `Price` as a tinytype would simply look like this :
-```
+```python
 @dataclass(frozen=True)
 class Price:
     value: Decimal
@@ -180,7 +180,7 @@ def calculate_compound_interest(
     # ...
 ```
 
-Now, our function makes it clear what are the options.
+Now, our function makes it clear what are the options for compound.
 ```python
 t = calculate_compound_interest_anually(
     principal=Principal(Decimal('1000')),
@@ -210,13 +210,13 @@ A nice abstraction over memory management.
 
 ## How to test
 
-```
+```python
 pytest
 ```
 
 ## How to use 
 
-```
+```python
 from decimal import Decimal
 
 from compbolt import (
