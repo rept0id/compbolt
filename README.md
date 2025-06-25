@@ -146,7 +146,7 @@ For example, for compound, only the numbers :
 
 Anything else, in the context of our example, is a bad idea, specially 365 for daily or 52 for weekly, they both can be tricky, since they change according to the year.
 
-Let's say now that we want to express this with code. One way is to make our function to check, once it's called, that the compound is one of the numbers that we like. But this way, the caller doesn't know this, and will get an error message (?) without knowning that it was not allowed to put 365 for compound but only 1,2,4 or 12.
+Let's say now that we want to express this with code. One way is to make our function to check, once it's called, that the compound is one of the numbers that we like. But this way, the caller doesn't know this, and will get an... unfair... error because we don't want compound to be 365 but we didn't made it crystal clear.
 
 With enums, we can express this in our code and exclude weekly and daily in a very cool way.
 
