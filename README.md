@@ -86,7 +86,8 @@ class Years:
     def __post_init__(self):
         if self.value < 0:
             raise ValueError(f"Years cannot be negative: {self.value}")
-
+```
+```python
 ### # # ###
 
 def calculate_compound_interest_anually(
@@ -120,16 +121,17 @@ def calculate_compound_interest_anually(
     ### # # ###
 
     return A
-
+```
+```python
 ### # # ###
 
-result = calculate_compound_interest_anually(
+t = calculate_compound_interest_anually(
     principal=Principal(Decimal('1000')),
     rate_percent=RatePercent(Decimal('5.0')),
     years=Years(Decimal('2'))
 )
 
-print(result)
+print(t)
 ```
 
 ### 2. Enums everywhere
@@ -180,12 +182,14 @@ def calculate_compound_interest(
 
 Now, our function makes it clear what are the options.
 ```python
-calculate_compound_interest_anually(
+t = calculate_compound_interest_anually(
     principal=Principal(Decimal('1000')),
     rate_percent=RatePercent(Decimal('5.0')),
     years=Years(Decimal('2')),
     compound=Compound.ANNUAL
 )
+
+print(t)
 ```
 
 Enums can also be used for better state management. Instead of states existing magically in our code, we can have an enum that specifies each state. This, not only makes our work more reliable, but adds to better readability and maintainability.
