@@ -210,7 +210,7 @@ A nice abstraction over memory management.
 
 ## How to test
 
-```python
+```sh
 pytest
 ```
 
